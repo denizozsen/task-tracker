@@ -1,0 +1,80 @@
+# The following steps serve as a record for how the project was
+# initially set up.
+# Please DO NOT use these steps to run the project, use install.txt instead
+#
+# Note: these steps were tested on MacOS Sierra, version 10.12.6, on May 5 2018
+#
+
+# Pre-requisites
+* git
+* php71 (ensure system is using this version)
+* composer
+* vagrant (ensure latest version)
+* vagrant plugin: vagrant-bindfs)
+* virtualbox (ensure latest version)
+* Add the following line to /etc/hosts:
+192.168.10.10   task-tracker.local
+* cd into the parent of the dir where the app is going to live
+* Ensure that a dir named 'task-tracker' does not already exist
+
+# Install Laravel
+composer global require "laravel/installer"
+# ensure that composer's system-wide vendor bin directory in your $PATH
+# this will usually be ~/.composer/vendor/bin
+laravel new task-tracker
+# note: this may show up composer errors. This is ok, as we will re-run
+#       composer install later on, withinvagrant, which will fix those errors
+cd task-tracker
+
+# Initialize git repository and push first commit with all files to remote
+git init
+git remote add origin git@git.toptal.com:screening/deniz-han-ozsen.git
+echo '# task-tracker - a simple task tracking app' > README
+git add .
+git commit -m "first commit: new Laravel app"
+git push -u origin master
+
+# Set up vagrant: we'll use the Homestead package
+vagrant box add laravel/homestead
+composer require laravel/homestead --dev
+git add composer.json
+git commit -m "composer package: laravel/homestead"
+php vendor/bin/homestead make
+
+# Homestead.yml: change map line under sites entry to following:
+map: task-tracker.local
+# Homestead.yml: change line under database entry to following:
+- task-tracker
+
+git add Homestead.yaml Vagrantfile after.sh aliases
+git commit -m "Generate Homestead's Vagrantfile and config files"
+git push origin master
+
+# Bring up vagrant for the first time
+vagrant up
+
+# Run composer install within guest (vagrant machine)
+vagrant ssh
+cd code
+composer install
+exit
+
+# Create mysql user for the app
+vagrant ssh
+mysql
+CREATE USER 'task-tracker'@'%' IDENTIFIED BY 'xtrack';
+GRANT ALL PRIVILEGES ON task-tracker.* TO 'task-tracker'@'%';
+FLUSH PRIVILEGES;
+quit
+exit
+
+# Configure Laravel
+cp .env.example .env
+# Change APP_NAME, APP_URL and DB_DATABASE entries in .env:
+sed -i -e "s/APP_NAME=Laravel/APP_NAME=task-tracker/g;s/APP_URL=http:\/\/localhost/APP_URL=http:\/\/task-tracker.local/g;s/DB_DATABASE=homestead/DB_DATABASE=task-tracker/g" .env
+# Generate app key by running these commands:
+vagrant ssh
+cd code
+php artisan key:generate
+exit
+

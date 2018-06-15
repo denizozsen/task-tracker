@@ -1,0 +1,80 @@
+<h2>Edit Profile</h2>
+
+<div ng-if="pc.managedUsers.length">
+    Editing profile for:
+    <select ng-model="pc.editedUser" ng-options="(managedUser.id === pc.self.id ? 'Me' : managedUser.email) for managedUser in pc.managedUsers">
+    </select>
+</div>
+
+<div>
+    <p ng-repeat="item in pc.messageQ" class="alert alert-{{ item.type }}">{{ item.message }}</p>
+</div>
+
+<div>
+
+    <form name="profileForm">
+
+        <label>Name:</label>
+        <br />
+        <input type="text" name="name" ng-model="pc.editedUser.name" />
+
+        <br /><br />
+
+        <label>Email:</label>
+        <br />
+        <input type="text" name="email" ng-model="pc.editedUser.email" />
+
+        <br /><br />
+
+        <label>Password:</label>
+        <br />
+        <input type="password" name="password" ng-model="pc.editedUser.password" />
+        <p class="description-text">Leave this empty, to keep using the same password.</p>
+
+        <br />
+
+        <label>Profile Picture:</label>
+        <br />
+
+        <input type="file" ngf-select ng-model="pc.pictureToUpload" name="picture"
+               accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+        <img ng-show="pc.pictureToUpload.$valid" ngf-thumbnail="'/storage/user/' + pc.editedUser.id + '/' + pc.editedUser.picture" class="thumb">
+            <button ng-click="pc.pictureToUpload = null" ng-show="pc.pictureToUpload">Remove</button>
+        <br>
+        <span class="progress" ng-show="pc.pictureToUpload.progress >= 0">
+            <div style="width:{{pc.pictureToUpload.progress}}%"
+                 ng-bind="pc.pictureToUpload.progress + '%'"></div>
+          </span>
+        <span ng-show="pc.pictureToUpload.result">Upload Successful</span>
+
+        <br /><br />
+
+        <label>Role:</label>
+        <div ng-if="pc.getRoleChoices(pc.editedUser).length">
+            <select name="role" ng-model="pc.editedUser.role" ng-options="role for role in pc.getRoleChoices(pc.editedUser)">
+            </select>
+        </div>
+        <span ng-if="!pc.getRoleChoices(pc.editedUser).length">{{ pc.editedUser.role }}</span>
+
+        <div ng-if="pc.isAccountBlocked(pc.editedUser)">
+            <br />
+            <label>Account Blocked!!!</label>
+            <p>This user's account has been blocked, due to repeated failed login attempts.</p>
+            <button name="role" ng-click="pc.unblockAccount(pc.editedUser)">Unblock!</button>
+        </div>
+        <div ng-if="pc.isAccountUnblocked(pc.editedUser)">
+            <br />
+            <label>Account Unblocked</label>
+            <p>
+                You have set this user's account to be unblocked.
+                Note that this change will only take effect, once you click Save.
+            </p>
+        </div>
+
+        <br /><br />
+
+        <button ng-click="pc.submit()">Save</button>
+
+    </form>
+
+</div>

@@ -1,0 +1,28 @@
+<h2>Account Verification</h2>
+
+<p>
+    Thank you for signing up! Please enter the verification code from the mail we've sent to you! <br />
+    If you can't find your verification code mail, click "Resend" below, to have it sent to you again.
+</p>
+
+<div>
+    <p ng-repeat="item in vc.messageQ" class="alert alert-{{ item.type }}">{{ item.message }}</p>
+</div>
+
+<div>
+    <label for="email">Email:</label>
+    <input type="text" id="email" ng-model="vc.email" />
+
+    <br /><br />
+
+    <label for="verificationCode">Verification Code:</label>
+    <input type="text" id="verificationCode" ng-model="vc.verificationCode" />
+
+    <br /><br />
+
+    <button ng-click="vc.submit()">Submit</button>
+
+    <br /><br />
+
+    <button ng-click="vc.resend()">Resend</button>
+</div>

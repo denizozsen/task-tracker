@@ -1,0 +1,116 @@
+<h2>Tasks</h2>
+
+<div style="padding-bottom: 20px;" ng-if="ec.managedUsers.length">
+    Viewing tasks for:
+    <select ng-model="ec.selectedUserId"
+            ng-options="user.id as (user.id === ec.self.id ? 'Me' : user.email) for user in ec.managedUsers"
+            ng-change="ec.onSelectedUserChange()">
+    </select>
+</div>
+
+<div>
+    <p ng-repeat="item in ec.messageQ" class="alert alert-{{ item.type }}">{{ item.message }}</p>
+</div>
+
+<button type="button" class="btn btn-default btn-xs" aria-label="Create New Task" title="Create New Task"
+        ng-click="ec.onCreateNew()">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+</button>
+
+<span style="padding-left:30px;">Record count: {{ ec.tasks.length }}</span>
+
+<table style="margin-top:20px;"  class="table">
+    <thead>
+
+        <tr class="task-heading">
+            <th class="col-md-2">Title</th>
+            <th class="col-md-3">Description</th>
+            <th class="col-md-3">Start Date</th>
+            <th class="col-md-3">Interval</th>
+            <th class="col-md-1"></th>
+        </tr>
+
+        <tr class="filter">
+            <td>
+                <input type="text" class="form-control input-sm small-text"
+                       ng-model="ec.filter.title"
+                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" placeholder="Title" />
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm small-text" placeholder="Description"
+                       ng-model="ec.filter.description"
+                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm small-text half-width" placeholder="First Start Date"
+                       ng-model="ec.filter.startsOnFrom"
+                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                <input type="text" class="form-control input-sm small-text  half-width" placeholder="Last Start Date"
+                       ng-model="ec.filter.startsOnTo"
+                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+            </td>
+            <td>
+                <input type="text" class="form-control input-sm small-text quarter-width" placeholder="Lowest"
+                       ng-model="ec.filter.intervalFrom"
+                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                <input type="text" class="form-control input-sm small-text quarter-width" placeholder="Highest"
+                       ng-model="ec.filter.intervalTo"
+                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                <input type="text" class="form-control input-sm small-text half-width" placeholder="Interval Type"
+                       ng-model="ec.filter.intervalTypeIn"
+                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+            </td>
+            <td>
+            </td>
+        </tr>
+
+        <tr class="task-data" ng-repeat="task in ec.tasks" ng-click="ec.onEdit(task, $event)">
+            <td>
+                <span ng-if="!ec.isEditing(task)">{{ task.title }}</span>
+                <input ng-if="ec.isEditing(task)" type="text" class="form-control input-sm"
+                       ng-model="ec.editedTask.title" />
+            </td>
+            <td>
+                <span ng-if="!ec.isEditing(task)">
+                    {{ task.description | limitTo:40 }}
+                    <span ng-if="task.description.length > 40">...</span>
+                </span>
+                <textarea ng-if="ec.isEditing(task)" class="form-control input-sm"
+                       ng-model="ec.editedTask.description" ></textarea>
+            </td>
+            <td class="text-center">
+                <span ng-if="!ec.isEditing(task)">{{ task.starts_on }}</span>
+                <input ng-if="ec.isEditing(task)" type="text" class="form-control input-sm"
+                       ng-model="ec.editedTask.starts_on" />
+            </td>
+            <td class="text-center">
+                <span ng-if="!ec.isEditing(task) && task.interval > 1">{{ task.interval }}</span>
+                <span ng-if="!ec.isEditing(task)">{{ task.interval_type }}<span ng-if="task.interval > 1">s</span></span>
+                <input ng-if="ec.isEditing(task)" type="text" class="form-control input-sm half-width"
+                       ng-model="ec.editedTask.interval" />
+                <select ng-if="ec.isEditing(task)" class="form-control input-sm half-width"
+                        ng-model="ec.editedTask.interval_type"
+                        ng-options="(intervalType + (ec.editedTask.interval > 1 ? 's' : '')) for intervalType in ec.getIntervalTypeChoices()">
+                </select>
+            </td>
+            <td style="vertical-align: middle">
+                <button ng-if="!ec.isEditing()"
+                        type="button" class="btn btn-default btn-xs" aria-label="Delete" title="Delete"
+                        ng-click="ec.onDelete(task, $event)">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+                <button ng-if="ec.isEditing(task)"
+                        type="button" class="btn btn-default btn-xs" aria-label="Save" title="Save"
+                        ng-click="ec.onSave(task, $event)">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                </button>
+                <button ng-if="ec.isEditing(task)"
+                        type="button" class="btn btn-default btn-xs" aria-label="Revert" title="Revert"
+                        ng-click="ec.onRevert($event)">
+                    <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                </button>
+            </td>
+        </tr>
+
+    </thead>
+</table>

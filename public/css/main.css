@@ -1,0 +1,21 @@
+.quarter-width {
+    display: inline;
+    width: 23%;
+}
+
+.half-width {
+    display: inline;
+    width: 48%;
+}
+
+.small-text {
+    font-size: 60%;
+}
+
+tr.task-data:hover {
+    background-color: lightgrey;
+}
+
+.description-text {
+    font-size: 80%;
+}

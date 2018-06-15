@@ -1,0 +1,23 @@
+<h2>Login</h2>
+
+<div>
+    <p ng-repeat="item in lc.messageQ" class="alert alert-{{ item.type }}">{{ item.message }}</p>
+</div>
+
+<div>
+
+    <label for="email">Email:</label>
+    <br />
+    <input type="text" id="email" ng-model="lc.credentials.email" />
+
+    <br /><br />
+
+    <label for="password">Password:</label>
+    <br />
+    <input type="password" id="password" ng-model="lc.credentials.password" />
+
+    <br /><br />
+
+    <button ng-click="lc.login()">Login</button>
+
+</div>

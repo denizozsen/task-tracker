@@ -1,0 +1,34 @@
+- Made the following change in config/view.php, to re-route angular view requests to public/views:
+    'paths' => [
+        public_path('views')
+    ],
+
+- JS libs installed via npm are currently kept in public/js/node_modules.
+  This is not the best place, as it's publicly visible.
+  Furthermore, we are using the non-minified versions of all JS libs, which is also not ideal.
+
+- Account Verification: currently only supports manual verification code entry. Could be
+  extended to have a link in the mail that does the verification automatically on being followed.
+
+- SSL: currently does not use SSL. Should change to using SSL in the future, to avoid sending passwords in clear
+
+- Authentication: we currently send the user ID along with all authenticated requests. However, this should not be
+  necessary - the "API key" should be all that's necessary for the back-end to identify the user
+
+- Logging all uncaught exceptions would help debug error conditions, in production
+
+- Laravel maintains a PHP session, by default, via session cookie. We should turn this off, because the API provides
+  session management. Must check how it can be turned off and what the consequences would be.
+
+- The datetime handling in the API authentication code could be subject to timezone issues. We should ensure that
+  we create all datetime values as UTC.
+
+- Currently, datetime values are formatted Date.toUTCString(), in the UI. This should probably be configurable
+  somewhere, maybe with the default guessed from the browser's locale, or something.
+  Either way. it would be helpful to use a Date library like moment.js, for easier formatting and parsing of dates.
+
+- The users endpoint (UserController) currently provides functionality for 2 concepts:
+    1. User
+    2. Session
+  We should split this up into two separate endpoints (and 2 separate controllers). This would make the code a little
+  cleaner and keep concerns separated.

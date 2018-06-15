@@ -1,0 +1,19 @@
+<h2>Invite to sign up</h2>
+
+<p>
+    You can invite someone to sign up for a Task Tracker account.<br />
+    Just fill in their e-mail address and click Send Invite, to have an invitation sent to them.
+</p>
+
+<div>
+    <p ng-repeat="item in ic.messageQ" class="alert alert-{{ item.type }}">{{ item.message }}</p>
+</div>
+
+<div>
+    <label for="email">Email:</label>
+    <input type="text" id="email" ng-model="ic.email" />
+
+    <br /><br />
+
+    <button ng-click="ic.sendInvite()">Send Invite</button>
+</div>

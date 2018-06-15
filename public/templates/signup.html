@@ -1,0 +1,31 @@
+<h2>Sign-up</h2>
+
+<p>Please enter your details, so we can sign you up as a new Task Tracker user!</p>
+
+<div>
+    <p ng-repeat="item in sc.messageQ" class="alert alert-{{ item.type }}">{{ item.message }}</p>
+</div>
+
+<div>
+
+    <label>Name:</label>
+    <br />
+    <input type="text" name="name" ng-model="sc.newUser.name" />
+
+    <br /><br />
+
+    <label>Email:</label>
+    <br />
+    <input type="text" name="email" ng-model="sc.newUser.email" />
+
+    <br /><br />
+
+    <label>Password:</label>
+    <br />
+    <input type="password" name="password" ng-model="sc.newUser.password" />
+
+    <br /><br />
+
+    <button ng-click="sc.submit()">Submit</button>
+
+</div>

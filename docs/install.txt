@@ -1,0 +1,53 @@
+# Please follow these instructions for building and running the project
+
+# Pre-requisites
+# You need to have the following installed on your system, before running the project.
+* git
+* php71 (ensure system is using this version)
+* composer
+* vagrant (ensure latest version)
+* vagrant plugin: vagrant-bindfs)
+* virtualbox (ensure latest version)
+* Add the following line to /etc/hosts:
+192.168.10.10   task-tracker.local
+* cd into the parent of the dir where the app is going to live
+* Ensure that a dir named 'task-tracker' does not already exist
+
+# Build
+composer install
+
+# Run on vagrant
+vagrant up
+
+# Install front end dependencies (AngularJS etc)
+vagrant ssh
+cd code
+npm install
+exit
+
+# Run db migrations
+vagrant ssh
+cd code
+php artisan migrate
+exit
+
+# Laravel configuration
+cp .env.example .env
+sed -i -e "s/APP_NAME=Laravel/APP_NAME=task-tracker/g;s/APP_URL=http:\/\/localhost/APP_URL=http:\/\/task-tracker.local/g;s/DB_DATABASE=homestead/DB_DATABASE=task-tracker/g" .env
+vagrant ssh
+cd code
+php artisan key:generate
+exit
+
+# Mail configuration: you'll have to set the following values, within .env, as appropriate for your smtp provider.
+# The following is just an example:
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=my.name@gmail.com
+MAIL_PASSWORD=123456789
+MAIL_ENCRYPTION=tls
+
+
+# Done! Access it at http://task-tracker.local/
+
