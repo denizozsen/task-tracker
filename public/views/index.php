@@ -24,6 +24,7 @@
         <script src="js/services/userService.js"></script>
         <script src="js/services/messagesService.js"></script>
         <script src="js/services/taskService.js"></script>
+        <script src="js/directives/main.js"></script>
         <script src="js/controllers/mainController.js"></script>
         <script src="js/controllers/tasksController.js"></script>
         <script src="js/controllers/profileController.js"></script>

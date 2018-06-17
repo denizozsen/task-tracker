@@ -31,37 +31,18 @@
         </tr>
 
         <tr class="filter">
+            <td><list-filter ng-model="ec.filter.title" controller="ec" placeholder="Title"></list-filter></td>
+            <td><list-filter ng-model="ec.filter.description" controller="ec" placeholder="Description"></list-filter></td>
             <td>
-                <input type="text" class="form-control input-sm small-text"
-                       ng-model="ec.filter.title" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
-                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" placeholder="Title" />
+                <list-filter ng-model="ec.filter.startsOnFrom" controller="ec" placeholder="First" extra-class="half-width"></list-filter>
+                <list-filter ng-model="ec.filter.startsOnTo" controller="ec" placeholder="Last" extra-class="half-width"></list-filter>
             </td>
             <td>
-                <input type="text" class="form-control input-sm small-text" placeholder="Description"
-                       ng-model="ec.filter.description" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
-                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                <list-filter ng-model="ec.filter.intervalFrom" controller="ec" placeholder="Lowest" extra-class="quarter-width"></list-filter>
+                <list-filter ng-model="ec.filter.intervalTo" controller="ec" placeholder="Highest" extra-class="quarter-width"></list-filter>
+                <list-filter ng-model="ec.filter.intervalTypeIn" controller="ec" placeholder="Interval" extra-class="half-width"></list-filter>
             </td>
-            <td>
-                <input type="text" class="form-control input-sm small-text half-width" placeholder="First Start Date"
-                       ng-model="ec.filter.startsOnFrom" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
-                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
-                <input type="text" class="form-control input-sm small-text  half-width" placeholder="Last Start Date"
-                       ng-model="ec.filter.startsOnTo" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
-                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
-            </td>
-            <td>
-                <input type="text" class="form-control input-sm small-text quarter-width" placeholder="Lowest"
-                       ng-model="ec.filter.intervalFrom" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
-                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
-                <input type="text" class="form-control input-sm small-text quarter-width" placeholder="Highest"
-                       ng-model="ec.filter.intervalTo" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
-                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
-                <input type="text" class="form-control input-sm small-text half-width" placeholder="Interval Type"
-                       ng-model="ec.filter.intervalTypeIn" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
-                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
-            </td>
-            <td>
-            </td>
+            <td></td>
         </tr>
 
         <tr class="task-data" ng-repeat="task in ec.tasks" ng-click="ec.onEdit(task, $event)">
