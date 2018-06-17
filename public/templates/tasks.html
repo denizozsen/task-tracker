@@ -9,7 +9,7 @@
 </div>
 
 <div>
-    <p ng-repeat="item in ec.messageQ" class="alert alert-{{ item.type }}">{{ item.message }}</p>
+    <p ng-repeat="item in ec.messageQ" class="alert alert-{{ ::item.type }}">{{ ::item.message }}</p>
 </div>
 
 <button type="button" class="btn btn-default btn-xs" aria-label="Create New Task" title="Create New Task"
@@ -47,26 +47,26 @@
 
         <tr class="task-data" ng-repeat="task in ec.tasks" ng-click="ec.onEdit(task, $event)">
             <td>
-                <span ng-if="!ec.isEditing(task)">{{ task.title }}</span>
+                <span ng-if="!ec.isEditing(task)">{{ ::task.title }}</span>
                 <input ng-if="ec.isEditing(task)" type="text" class="form-control input-sm"
                        ng-model="ec.editedTask.title" />
             </td>
             <td>
                 <span ng-if="!ec.isEditing(task)">
-                    {{ task.description | limitTo:40 }}
+                    {{ ::task.description | limitTo:40 }}
                     <span ng-if="task.description.length > 40">...</span>
                 </span>
                 <textarea ng-if="ec.isEditing(task)" class="form-control input-sm"
                        ng-model="ec.editedTask.description" ></textarea>
             </td>
             <td class="text-center">
-                <span ng-if="!ec.isEditing(task)">{{ task.starts_on }}</span>
+                <span ng-if="!ec.isEditing(task)">{{ ::task.starts_on }}</span>
                 <input ng-if="ec.isEditing(task)" type="text" class="form-control input-sm"
                        ng-model="ec.editedTask.starts_on" />
             </td>
             <td class="text-center">
-                <span ng-if="!ec.isEditing(task) && task.interval > 1">{{ task.interval }}</span>
-                <span ng-if="!ec.isEditing(task)">{{ task.interval_type }}<span ng-if="task.interval > 1">s</span></span>
+                <span ng-if="!ec.isEditing(task) && task.interval > 1">{{ ::task.interval }}</span>
+                <span ng-if="!ec.isEditing(task)">{{ ::task.interval_type }}<span ng-if="task.interval > 1">s</span></span>
                 <input ng-if="ec.isEditing(task)" type="text" class="form-control input-sm half-width"
                        ng-model="ec.editedTask.interval" />
                 <select ng-if="ec.isEditing(task)" class="form-control input-sm half-width"
