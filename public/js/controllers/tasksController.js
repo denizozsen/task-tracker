@@ -19,19 +19,13 @@
         ec.creatingNew    = false;
 
         ec.onFilterBlur = function() {
-            applyFilters();
-        };
-
-        ec.onFilterKeyUp = function(keyCode) {
-            if (keyCode === 13) {
-                applyFilters();
-            }
+            return applyFilters();
         };
 
         ec.onSelectedUserChange = function() {
             doRevert();
             $localStorage.tasksSelectedUserId = ec.selectedUserId;
-            loadData();
+            return loadData();
         };
 
         ec.onCreateNew = function() {
@@ -73,12 +67,12 @@
 
         ec.onSave = function(task, event) {
             event.stopPropagation();
-            doSave(task);
+            return doSave(task);
         };
 
         ec.onDelete = function(task, event) {
             event.stopPropagation();
-            doDelete(task);
+            return doDelete(task);
         };
 
         var doRevert = function() {
@@ -86,13 +80,13 @@
                 var index = ec.tasks.indexOf(ec.editedTask);
                 ec.tasks.splice(index, 1);
             }
-            ec.editedTask = null;
-            ec.creatingNew   = false;
+            ec.editedTask  = null;
+            ec.creatingNew = false;
         };
 
         var doSave = function(task) {
             Messages.clear(ec.messageQ);
-            Task.save(ec.selectedUserId, ec.editedTask)
+            return Task.save(ec.selectedUserId, ec.editedTask)
                 .then(function(data) {
                     ec.editedTask = null;
                     ec.creatingNew   = false;
@@ -107,7 +101,7 @@
 
         var doDelete = function(task) {
             Messages.clear(ec.messageQ);
-            Task.delete(task.id)
+            return Task.delete(task.id)
                 .then(function(data) {
                     var index = ec.tasks.indexOf(task);
                     ec.tasks.splice(index, 1);
@@ -124,7 +118,7 @@
                 }
             }
             $location.search(ec.filter);
-            loadData();
+            return loadData();
         };
 
         var loadData = function() {
@@ -162,7 +156,7 @@
 
             ec.filter = $location.search();
 
-            loadData();
+            return loadData();
         };
 
         initialize();
