@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('taskTrackerApp')
-        .controller('profileController', [ 'User', 'Messages', 'Request', '$q', '$timeout', profileController ]);
+        .controller('profileController', [ 'User', 'Messages', 'Request', '$q', profileController ]);
 
-    function profileController(User, Messages, Request, $q, $timeout)
+    function profileController(User, Messages, Request, $q)
     {
         var pc = this;
 
@@ -59,10 +59,8 @@
                 );
 
                 pictureUpload.then(function (response) {
-                    // return $timeout(function () {
-                        pc.pictureToUpload.result = response.data;
-                        pc.editedUser.picture = pc.pictureToUpload.name;
-                    // });
+                    pc.pictureToUpload.result = response.data;
+                    pc.editedUser.picture = pc.pictureToUpload.name;
                 }, function (error) {
                     Messages.addErrorResponse(error, pc.messageQ);
                 }, function (event) {

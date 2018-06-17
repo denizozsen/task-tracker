@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('taskTrackerApp')
-        .factory('Task', [ 'Request', 'User', '$q', taskService ]);
+        .factory('Task', [ 'Request', 'User', taskService ]);
 
-    function taskService(Request, User, $q)
+    function taskService(Request, User)
     {
         var prepareModel = function(task) {
             task.date_time = new Date(task.date_time).toUTCString();
