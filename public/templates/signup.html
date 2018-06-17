@@ -3,7 +3,7 @@
 <p>Please enter your details, so we can sign you up as a new Task Tracker user!</p>
 
 <div>
-    <p ng-repeat="item in sc.messageQ" class="alert alert-{{ item.type }}">{{ item.message }}</p>
+    <p ng-repeat="item in sc.messageQ" class="alert alert-{{ ::item.type }}">{{ ::item.message }}</p>
 </div>
 
 <div>
