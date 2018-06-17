@@ -33,32 +33,32 @@
         <tr class="filter">
             <td>
                 <input type="text" class="form-control input-sm small-text"
-                       ng-model="ec.filter.title"
-                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" placeholder="Title" />
+                       ng-model="ec.filter.title" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
+                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" placeholder="Title" />
             </td>
             <td>
                 <input type="text" class="form-control input-sm small-text" placeholder="Description"
-                       ng-model="ec.filter.description"
-                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                       ng-model="ec.filter.description" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
+                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
             </td>
             <td>
                 <input type="text" class="form-control input-sm small-text half-width" placeholder="First Start Date"
-                       ng-model="ec.filter.startsOnFrom"
-                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                       ng-model="ec.filter.startsOnFrom" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
+                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
                 <input type="text" class="form-control input-sm small-text  half-width" placeholder="Last Start Date"
-                       ng-model="ec.filter.startsOnTo"
-                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                       ng-model="ec.filter.startsOnTo" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
+                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
             </td>
             <td>
                 <input type="text" class="form-control input-sm small-text quarter-width" placeholder="Lowest"
-                       ng-model="ec.filter.intervalFrom"
-                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                       ng-model="ec.filter.intervalFrom" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
+                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
                 <input type="text" class="form-control input-sm small-text quarter-width" placeholder="Highest"
-                       ng-model="ec.filter.intervalTo"
-                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                       ng-model="ec.filter.intervalTo" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
+                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
                 <input type="text" class="form-control input-sm small-text half-width" placeholder="Interval Type"
-                       ng-model="ec.filter.intervalTypeIn"
-                       ng-blur="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
+                       ng-model="ec.filter.intervalTypeIn" ng-model-options="{updateOn: 'blur keyup', debounce: { 'keyup': 700, 'blur': 0 }}"
+                       ng-change="ec.onFilterBlur()" ng-keyup="ec.onFilterKeyUp($event.keyCode)" />
             </td>
             <td>
             </td>

@@ -14,7 +14,8 @@
             when('/', {
                 templateUrl: '/templates/tasks.html',
                 controller: 'tasksController',
-                controllerAs: 'ec'
+                controllerAs: 'ec',
+                reloadOnSearch: false
             })
             .when('/profile', {
                 templateUrl: '/templates/profile.html',

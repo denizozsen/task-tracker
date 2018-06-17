@@ -31,7 +31,7 @@
         ec.onSelectedUserChange = function() {
             doRevert();
             $localStorage.tasksSelectedUserId = ec.selectedUserId;
-            applyFilters();
+            loadData();
         };
 
         ec.onCreateNew = function() {
@@ -98,7 +98,7 @@
                     ec.creatingNew   = false;
                     Object.assign(task, data.task);
                     Messages.addSuccess('Task record was updated successfully', ec.messageQ);
-                    applyFilters();
+                    loadData();
                 })
                 .catch(function(error) {
                     Messages.addErrorResponse(error, ec.messageQ);
@@ -124,7 +124,21 @@
                 }
             }
             $location.search(ec.filter);
-            $route.reload();
+            loadData();
+        };
+
+        var loadData = function() {
+            return Task.get(ec.selectedUserId, ec.filter).then(function(data) {
+                ec.tasks = data.tasks;
+                doRevert();
+            }).catch(function(error) {
+                if (error.type === 'not_authenticated') {
+                    $location.path('/login');
+                    return;
+                }
+
+                Messages.addErrorResponse(error, ec.messageQ);
+            });
         };
 
         var initialize = function() {
@@ -147,16 +161,8 @@
             }
 
             ec.filter = $location.search();
-            Task.get(ec.selectedUserId, ec.filter).then(function(data) {
-                ec.tasks = data.tasks;
-            }).catch(function(error) {
-                if (error.type === 'not_authenticated') {
-                    $location.path('/login');
-                    return;
-                }
 
-                Messages.addErrorResponse(error, ec.messageQ);
-            });
+            loadData();
         };
 
         initialize();
